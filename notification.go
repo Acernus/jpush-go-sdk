@@ -5,12 +5,15 @@ type AndroidIntent struct {
 }
 
 type NotificationAndroid struct {
-	Alert     string                 `json:"alert"`
-	Title     string                 `json:"title,omitempty"`
-	BuilderId int                    `json:"builder_id,omitempty"`
-	LargeIcon string                 `json:"large_icon,omitempty"`
-	Intent    *AndroidIntent         `json:"intent,omitempty"`
-	Extras    map[string]interface{} `json:"extras,omitempty"`
+	Alert             string                 `json:"alert"`
+	Title             string                 `json:"title,omitempty"`
+	BuilderId         int                    `json:"builder_id,omitempty"`
+	LargeIcon         string                 `json:"large_icon,omitempty"`
+	Intent            *AndroidIntent         `json:"intent,omitempty"`
+	DisplayForeground string                 `json:"display_foreground,omitempty"`
+	Priority          int                    `json:"priority,omitempty"`
+	Sound             string                 `json:"sound,omitempty"`
+	Extras            map[string]interface{} `json:"extras,omitempty"`
 }
 
 type IosPayload struct {
@@ -42,11 +45,11 @@ type QuickApp struct {
 }
 
 type Notification struct {
-	NotificationAndroid *NotificationAndroid `json:"android,omitempty"`
-	NotificationIOS     *NotificationIOS     `json:"ios,omitempty"`
-	InappMessage        *InappMessage        `json:"inapp_message,omitempty"`
-	Voip                *VOIP                `json:"voip,omitempty"`
-	Quickapp            *QuickApp            `json:"quickapp,omitempty"`
+	NotificationAndroid *NotificationAndroid   `json:"android,omitempty"`
+	NotificationIOS     *NotificationIOS       `json:"ios,omitempty"`
+	InappMessage        *InappMessage          `json:"inapp_message,omitempty"`
+	Voip                map[string]interface{} `json:"voip,omitempty"`
+	Quickapp            *QuickApp              `json:"quickapp,omitempty"`
 }
 
 func NewNotification() *Notification {
@@ -65,5 +68,9 @@ func (n *Notification) Android(req *NotificationAndroid) *Notification {
 
 func (n *Notification) UseInAppMessage() *Notification {
 	n.InappMessage = &InappMessage{InappMessage: true}
+	return n
+}
+func (n *Notification) VOIP(req map[string]interface{}) *Notification {
+	n.Voip = req
 	return n
 }

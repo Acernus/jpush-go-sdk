@@ -1,5 +1,12 @@
 package jpush
 
+type ApnsProduction bool
+
+const (
+	Production ApnsProduction = true
+	Test       ApnsProduction = false
+)
+
 const (
 	ThirdPartyChannelHuawei = "huawei"
 	ThirdPartyChannelXiaomi = "xiaomi"
@@ -17,6 +24,7 @@ const (
 type Options struct {
 	TimeToLive        *int                          `json:"time_to_live,omitempty"`
 	ThirdPartyChannel map[string]*ThirdPartyChannel `json:"third_party_channel,omitempty"`
+	ApnsProduction    ApnsProduction                `json:"apns_production"`
 }
 
 type ThirdPartyChannel struct {
